@@ -1,0 +1,22 @@
+# Don't copy these into the image during `COPY . .`
+
+# Largest folder — the container installs its own via `npm ci`
+node_modules
+
+# Built output — not needed in dev, and would bloat the image
+dist
+
+# Local database file — the container uses a named volume instead
+journal.db
+
+# Git history is irrelevant inside the container
+.git
+.gitignore
+
+# Logs
+*.log
+
+# Local env files — secrets are passed via docker-compose `environment`
+.env
+.env.local
+.env.*.local

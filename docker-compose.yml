@@ -1,0 +1,30 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      # Mount your source code into the container.
+      # This is what makes hot-reload work — Vite watches these files live.
+      - .:/app
+
+      # IMPORTANT: Override the mounted node_modules with a named volume.
+      # Without this, the host's node_modules (compiled for Mac/Windows)
+      # would overwrite the container's (compiled for Linux), breaking better-sqlite3.
+      - node_modules:/app/node_modules
+
+      # Persist the SQLite database file across container restarts.
+      # Without this, your journal entries vanish every time the container stops.
+      - db_data:/app/db
+
+    environment:
+      - NODE_ENV=development
+      # Read your Gemini API key from a .env file on the host (see .env.example).
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      # Tell server.ts where to store the database file (inside the named volume).
+      - DB_PATH=/app/db/journal.db
+
+# Named volumes are managed by Docker and live outside your project folder.
+volumes:
+  node_modules:
+  db_data:

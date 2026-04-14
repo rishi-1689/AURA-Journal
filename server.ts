@@ -7,7 +7,10 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const db = new Database("journal.db");
+// DB_PATH lets Docker Compose point the database to a named volume.
+// Falls back to the project root when running locally without Docker.
+const DB_PATH = process.env.DB_PATH || "journal.db";
+const db = new Database(DB_PATH);
 
 // Initialize database
 db.exec(`

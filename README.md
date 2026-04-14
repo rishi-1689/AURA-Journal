@@ -18,3 +18,22 @@ View your app in AI Studio: https://ai.studio/apps/651565fc-131c-44eb-acf6-8b2b8
 2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
 3. Run the app:
    `npm run dev`
+
+
+## Run with docker-compose
+
+**Prerequisites:**  docker
+
+
+# First time (or after code changes) — builds the image
+docker compose up --build
+
+# Subsequent starts — no rebuild needed
+docker compose up
+
+# Stop without losing data
+docker compose down
+
+# Nuclear option — also deletes the database volume
+docker compose down -v
+
